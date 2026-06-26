@@ -1453,6 +1453,160 @@
     border-radius: 100px;
   }
 
+  /* ===== 加号菜单（照片/视频 vs 文件） ===== */
+  .attach-sheet-mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 121;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .attach-sheet-mask.open { opacity: 1; pointer-events: auto; }
+  .attach-sheet {
+    position: absolute;
+    left: 12px; right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    background: #1c1c1e;
+    border-radius: 18px;
+    padding: 8px;
+    z-index: 122;
+    transform: translateY(calc(100% + 24px));
+    transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .attach-sheet.open { transform: translateY(0); }
+  .attach-sheet-grab {
+    width: 36px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.2);
+    margin: 4px auto 10px;
+  }
+  .attach-opt {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: none;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+  }
+  .attach-opt:active { background: rgba(255,255,255,0.06); }
+  .attach-opt-icon {
+    width: 42px; height: 42px;
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .attach-opt-icon svg { width: 22px; height: 22px; }
+  .attach-opt-main { flex: 1; }
+  .attach-opt-title { font-size: 15px; color: #fff; font-weight: 500; }
+  .attach-opt-desc { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .attach-sheet-cancel {
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px;
+    background: rgba(255,255,255,0.06);
+    border: none;
+    border-radius: 12px;
+    color: #5b8fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ===== 仿系统文件选择器 ===== */
+  .file-picker-mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 120;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .file-picker-mask.open { opacity: 1; pointer-events: auto; }
+  .file-picker {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    max-height: 82%;
+    background: #1c1c1e;
+    border-radius: 16px 16px 0 0;
+    z-index: 121;
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .file-picker.open { transform: translateY(0); }
+  .fp-grab {
+    width: 36px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.2);
+    margin: 8px auto 4px;
+  }
+  .fp-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 16px;
+  }
+  .fp-cancel {
+    background: none; border: none; color: #5b8fff;
+    font-size: 15px; cursor: pointer; padding: 0; width: 32px; text-align: left;
+  }
+  .fp-title { font-size: 16px; font-weight: 600; color: #fff; }
+  .fp-hint {
+    font-size: 12px; color: rgba(255,255,255,0.5);
+    padding: 0 16px 10px; line-height: 1.5;
+  }
+  .fp-list {
+    overflow-y: auto;
+    padding: 4px 12px;
+    flex: 1;
+  }
+  .fp-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .fp-item:active { background: rgba(255,255,255,0.05); }
+  .fp-item.selected { background: rgba(91,143,255,0.12); }
+  .fp-file-icon {
+    width: 40px; height: 40px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 10px; font-weight: 700; color: #fff;
+  }
+  .fp-file-info { flex: 1; min-width: 0; }
+  .fp-file-name {
+    font-size: 14px; color: #fff;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .fp-file-meta { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+  .fp-check {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fp-item.selected .fp-check {
+    background: #5b8fff; border-color: #5b8fff;
+  }
+  .fp-check svg { width: 14px; height: 14px; color: #fff; opacity: 0; }
+  .fp-item.selected .fp-check svg { opacity: 1; }
+  .fp-foot { padding: 10px 16px 16px; }
+  .fp-add-btn {
+    width: 100%; padding: 13px;
+    background: #5b8fff; border: none; border-radius: 12px;
+    color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .fp-add-btn:disabled { opacity: 0.4; }
+
   /* ===== 仿 iOS 相册选择器 ===== */
   .photo-picker-mask {
     position: absolute;
@@ -1609,17 +1763,22 @@
 
   /* ===== 长按语音录制浮层 ===== */
   .voice-recording {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 0;
-    padding: 30px 20px 24px;
-    background: linear-gradient(180deg, rgba(13,14,16,0) 0%, #0d0e10 30%);
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    padding: 24px 36px;
+    background: rgba(20,22,28,0.95);
+    border: 0.5px solid rgba(91,143,255,0.4);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
     display: none;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    z-index: 10;
+    gap: 12px;
+    z-index: 500;
   }
   .voice-recording.active {
     display: flex;
@@ -4085,6 +4244,12 @@
     background: rgba(76,209,130,0.08);
     color: #4cd182;
   }
+  /* 等待机器人上线标签（灰橙） */
+  .work-tag.waiting {
+    border-color: rgba(255,180,90,0.45);
+    background: rgba(255,180,90,0.08);
+    color: #ffb45a;
+  }
   /* 作品卡右侧 同步/执行 按钮 */
   .work-action-btn {
     flex-shrink: 0;
@@ -6202,7 +6367,7 @@
       </svg>
     </div>
     <div class="upload-success-title">视频完成上传</div>
-    <div class="upload-success-desc">视频已加入任务列表开始学习，学习完成后，即可查看仿真效果并同步真机执行。您可前往任务列表查看进度，或继续添加新动作。</div>
+    <div class="upload-success-desc">视频已加入任务列表开始学习。学习完成后会自动为你准备到机器人，准备好即可随时启动，无需手动保存或同步。你可前往任务列表查看进度，或继续添加新动作。</div>
   </div>
   <div class="upload-success-buttons">
     <button class="btn-primary-large" id="goTaskListBtn">前往任务列表</button>
@@ -6517,32 +6682,6 @@
         </div>
       </div>
 
-      <div class="msg-divider">今天 09:12</div>
-
-      <!-- 它主动推送的家里动态 -->
-      <div class="msg msg-bot">
-        <div class="msg-avatar bot">ET</div>
-        <div class="msg-body">
-          <div class="msg-bubble" style="background:transparent; padding:0;">
-            <div class="push-card">
-              <div class="push-card-head">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                主动提醒
-              </div>
-              <div class="push-card-body">听到门口有动静，扫了一眼是快递放在门口了 📦</div>
-              <div class="push-card-snap">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="11" r="3"/></svg>
-                <span class="snap-tag">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
-                  前置摄像头 · 09:12
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="msg-meta">09:12</div>
-        </div>
-      </div>
-
       <div class="msg-divider">今天 18:40</div>
 
       <!-- 远程问候：你下班发消息 -->
@@ -6690,57 +6829,15 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="#4cd182" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                     已生成仿真动作
                   </div>
-                  <div class="fn-line" style="color:rgba(255,255,255,0.5); margin-bottom:0;">同步真机后即可执行</div>
+                  <div class="fn-line" style="color:rgba(255,255,255,0.5); margin-bottom:0;">已自动准备到机器人，可随时启动</div>
                 </div>
               </div>
               <div class="fn-foot">
                 <button class="task-btn primary" style="flex:0;">查看效果</button>
-                <button class="task-btn">同步真机</button>
               </div>
             </div>
           </div>
           <div class="msg-meta">19:06</div>
-        </div>
-      </div>
-
-      <div class="msg-divider">19:08</div>
-
-      <!-- 自然语言调用「设性格」 -->
-      <div class="msg msg-user">
-        <div class="msg-avatar user">我</div>
-        <div class="msg-body">
-          <div class="msg-bubble">以后说话活泼一点，回应快点</div>
-          <div class="msg-meta">
-            19:08
-            <span class="msg-status">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="msg msg-bot">
-        <div class="msg-avatar bot">ET</div>
-        <div class="msg-body">
-          <div class="msg-bubble">好嘞！我调整一下～</div>
-          <div class="msg-bubble" style="background:transparent; padding:0; margin-top:4px;">
-            <div class="fn-card done">
-              <div class="fn-card-head">
-                <span class="fn-chip done">性格已更新</span>
-                <span class="fn-head-title">人设</span>
-              </div>
-              <div class="fn-rows">
-                <div class="fn-row"><span class="fn-key">语气</span><span class="fn-tag">活泼</span></div>
-                <div class="fn-row"><span class="fn-key">响应</span><span class="fn-val">更快</span></div>
-              </div>
-              <div class="fn-foot">
-                <div class="fn-status">即刻生效</div>
-                <button class="task-btn">撤销</button>
-                <button class="task-btn">去微调</button>
-              </div>
-            </div>
-          </div>
-          <div class="msg-meta">19:08</div>
         </div>
       </div>
 
@@ -6819,6 +6916,47 @@
       </div>
     </div>
 
+    <!-- 加号菜单：照片/视频 vs 文件 -->
+    <div class="attach-sheet-mask" id="attachSheetMask"></div>
+    <div class="attach-sheet" id="attachSheet">
+      <div class="attach-sheet-grab"></div>
+      <button class="attach-opt" id="attachOptMedia">
+        <div class="attach-opt-icon" style="background:rgba(91,143,255,0.15); color:#5b8fff;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="attach-opt-main">
+          <div class="attach-opt-title">照片 / 视频</div>
+          <div class="attach-opt-desc">发给它看，或让它学动作</div>
+        </div>
+      </button>
+      <button class="attach-opt" id="attachOptFile">
+        <div class="attach-opt-icon" style="background:rgba(76,209,130,0.15); color:#4cd182;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        </div>
+        <div class="attach-opt-main">
+          <div class="attach-opt-title">文件</div>
+          <div class="attach-opt-desc">上传资料，教它一方面的知识</div>
+        </div>
+      </button>
+      <button class="attach-sheet-cancel" id="attachSheetCancel">取消</button>
+    </div>
+
+    <!-- 仿系统文件选择器 -->
+    <div class="file-picker-mask" id="filePickerMask"></div>
+    <div class="file-picker" id="filePicker">
+      <div class="fp-grab"></div>
+      <div class="fp-head">
+        <button class="fp-cancel" id="fpCancel">取消</button>
+        <div class="fp-title">选择文件</div>
+        <span style="width:32px;"></span>
+      </div>
+      <div class="fp-hint">上传后，它会把内容学进知识库，之后你可以问它相关的问题</div>
+      <div class="fp-list" id="fpList"></div>
+      <div class="fp-foot">
+        <button class="fp-add-btn" id="fpAddBtn" disabled>添加</button>
+      </div>
+    </div>
+
     <div class="agent-safe-area"></div>
   </div>
 
@@ -6856,63 +6994,6 @@
   </div>
 
   <div class="config-body">
-
-    <!-- ===== 人格 ===== -->
-    <div class="config-section-title">人格</div>
-    <div class="config-card">
-      <div class="config-row" id="rowName">
-        <div class="config-row-icon" style="background:rgba(91,143,255,0.15); color:#5b8fff;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1v22M5 8c0-2 2-4 7-4s7 2 7 4-2 4-7 4-7-2-7-4z M5 16c0-2 2-4 7-4s7 2 7 4-2 4-7 4-7-2-7-4z"/>
-          </svg>
-        </div>
-        <div class="config-row-main">
-          <div class="config-row-title">名字</div>
-          <div class="config-row-desc">家庭成员怎么称呼它</div>
-        </div>
-        <div class="config-row-value">
-          <span id="nameValue">小G</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </div>
-      </div>
-      <div class="config-row" id="rowVoice">
-        <div class="config-row-icon" style="background:rgba(255,180,90,0.15); color:#ffb45a;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
-            <path d="M21 19a2 2 0 0 1-2 2h-1v-6h3v4z M3 19a2 2 0 0 0 2 2h1v-6H3v4z"/>
-          </svg>
-        </div>
-        <div class="config-row-main">
-          <div class="config-row-title">声音风格</div>
-          <div class="config-row-desc">温柔 / 活泼 / 沉稳 / 童声</div>
-        </div>
-        <div class="config-row-value">
-          <span id="voiceValue">温柔</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </div>
-      </div>
-      <div class="config-row" id="rowChatStyle">
-        <div class="config-row-icon" style="background:rgba(160,140,220,0.15); color:#a78bfa;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
-        </div>
-        <div class="config-row-main">
-          <div class="config-row-title">对话风格</div>
-          <div class="config-row-desc">简洁 / 友好 / 详尽</div>
-        </div>
-        <div class="config-row-value">
-          <span id="chatStyleValue">友好</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </div>
-      </div>
-    </div>
 
     <!-- ===== 隐私与记录 ===== -->
     <div class="config-section-title">隐私与记录</div>
@@ -6983,27 +7064,6 @@
     <div class="config-tip">这些是 Agent 自己学到的。你可以查看、修改或清除。</div>
 
   </div>
-</div>
-
-<!-- 改名字弹窗 -->
-<div class="confirm-modal" id="nameModal">
-  <div class="confirm-box">
-    <div class="confirm-title">给它起个名字</div>
-    <div class="confirm-desc">家庭成员怎么称呼它</div>
-    <input type="text" class="name-input" id="nameInput" maxlength="12" placeholder="输入名字">
-    <div class="confirm-buttons">
-      <button class="confirm-btn cancel" id="nameCancel">取消</button>
-      <button class="confirm-btn ok" id="nameOk">保存</button>
-    </div>
-  </div>
-</div>
-
-<!-- 人格选项面板（声音风格 / 对话风格 共用） -->
-<div class="opt-sheet-mask" id="optSheetMask"></div>
-<div class="opt-sheet" id="optSheet">
-  <div class="opt-sheet-grab"></div>
-  <div class="opt-sheet-title" id="optSheetTitle">选择</div>
-  <div id="optSheetList"></div>
 </div>
 
 <!-- ============================================ -->
@@ -8385,7 +8445,29 @@
       photoPicker.classList.remove('open');
     }
 
-    attachBtn.addEventListener('click', openPicker);
+    // 加号菜单：照片/视频 vs 文件
+    const attachSheet = document.getElementById('attachSheet');
+    const attachSheetMask = document.getElementById('attachSheetMask');
+    function openAttachSheet() {
+      attachSheetMask.classList.add('open');
+      attachSheet.classList.add('open');
+    }
+    function closeAttachSheet() {
+      attachSheetMask.classList.remove('open');
+      attachSheet.classList.remove('open');
+    }
+    attachBtn.addEventListener('click', openAttachSheet);
+    attachSheetMask.addEventListener('click', closeAttachSheet);
+    document.getElementById('attachSheetCancel').addEventListener('click', closeAttachSheet);
+    document.getElementById('attachOptMedia').addEventListener('click', () => {
+      closeAttachSheet();
+      setTimeout(openPicker, 180);
+    });
+    document.getElementById('attachOptFile').addEventListener('click', () => {
+      closeAttachSheet();
+      setTimeout(openFilePicker, 180);
+    });
+
     ppCancel.addEventListener('click', closePicker);
     photoPickerMask.addEventListener('click', closePicker);
 
@@ -8425,6 +8507,102 @@
           </div>
           <div class="msg-meta">
             ${getNowTime()}${isVideo ? ' · 视频' : ' · 图片'}
+            <span class="msg-status">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </div>
+        </div>`;
+      return div;
+    }
+
+    // ----- 文件选择器（知识库） -----
+    const filePicker = document.getElementById('filePicker');
+    const filePickerMask = document.getElementById('filePickerMask');
+    const fpList = document.getElementById('fpList');
+    const fpAddBtn = document.getElementById('fpAddBtn');
+    const fakeFiles = [
+      { name: '上海门店运营手册.pdf', ext: 'PDF', color: '#e2574c', meta: '2.4 MB · 昨天' },
+      { name: '城市攻略·成都美食.docx', ext: 'DOC', color: '#4a86e8', meta: '1.1 MB · 3天前' },
+      { name: '产品价格表_2026.xlsx', ext: 'XLS', color: '#4cd182', meta: '680 KB · 上周' },
+      { name: '会员权益说明.pdf', ext: 'PDF', color: '#e2574c', meta: '920 KB · 上周' },
+      { name: '常见问题FAQ.txt', ext: 'TXT', color: '#8e8e93', meta: '24 KB · 6月10日' },
+    ];
+    let fileSelected = [];
+
+    function buildFileList() {
+      fpList.innerHTML = '';
+      fileSelected = [];
+      updateFpAddBtn();
+      fakeFiles.forEach((f, i) => {
+        const item = document.createElement('div');
+        item.className = 'fp-item';
+        item.innerHTML = `
+          <div class="fp-file-icon" style="background:${f.color};">${f.ext}</div>
+          <div class="fp-file-info">
+            <div class="fp-file-name">${escapeHTML(f.name)}</div>
+            <div class="fp-file-meta">${f.meta}</div>
+          </div>
+          <div class="fp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>`;
+        item.addEventListener('click', () => {
+          const idx = fileSelected.indexOf(i);
+          if (idx >= 0) { fileSelected.splice(idx, 1); item.classList.remove('selected'); }
+          else { fileSelected.push(i); item.classList.add('selected'); }
+          updateFpAddBtn();
+        });
+        fpList.appendChild(item);
+      });
+    }
+    function updateFpAddBtn() {
+      const n = fileSelected.length;
+      fpAddBtn.disabled = n === 0;
+      fpAddBtn.textContent = n === 0 ? '添加' : `添加 (${n})`;
+    }
+    function openFilePicker() {
+      buildFileList();
+      filePickerMask.classList.add('open');
+      filePicker.classList.add('open');
+    }
+    function closeFilePicker() {
+      filePickerMask.classList.remove('open');
+      filePicker.classList.remove('open');
+    }
+    document.getElementById('fpCancel').addEventListener('click', closeFilePicker);
+    filePickerMask.addEventListener('click', closeFilePicker);
+    fpAddBtn.addEventListener('click', () => {
+      if (!fileSelected.length) return;
+      const chosen = fileSelected.slice().sort((a, b) => a - b);
+      closeFilePicker();
+      chosen.forEach(i => {
+        messagesEl.appendChild(makeFileMsg(fakeFiles[i]));
+      });
+      scrollToBottom();
+      const names = chosen.map(i => fakeFiles[i].name);
+      setTimeout(() => {
+        const reply = names.length === 1
+          ? `收到《${names[0]}》～我正在把里面的内容学进知识库，学完之后你可以直接问我相关的问题。`
+          : `收到 ${names.length} 份文件，我正在逐个学习它们的内容，学完后这些知识你都能问我。`;
+        messagesEl.appendChild(makeBotMsg(reply));
+        scrollToBottom();
+      }, 1000);
+    });
+
+    function makeFileMsg(f) {
+      const div = document.createElement('div');
+      div.className = 'msg msg-user';
+      div.innerHTML = `
+        <div class="msg-avatar user">我</div>
+        <div class="msg-body">
+          <div class="msg-bubble" style="padding:10px 12px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:38px;height:38px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;background:${f.color};">${f.ext}</div>
+              <div style="min-width:0;">
+                <div style="font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;">${escapeHTML(f.name)}</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;">${f.meta.split(' · ')[0]}</div>
+              </div>
+            </div>
+          </div>
+          <div class="msg-meta">
+            ${getNowTime()} · 文件
             <span class="msg-status">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </span>
@@ -8724,79 +8902,6 @@
     // 开关切换（夜间模式、摄像头记录、持续监听等）
     document.querySelectorAll('[data-onoff]').forEach(sw => {
       sw.addEventListener('click', () => sw.classList.toggle('on'));
-    });
-
-    // ---------- 名字：弹窗输入，改完同步对话页标题 ----------
-    const nameModal = document.getElementById('nameModal');
-    const nameInput = document.getElementById('nameInput');
-    const nameValue = document.getElementById('nameValue');
-    const agentTitle = document.querySelector('.agent-title');
-
-    document.getElementById('rowName').addEventListener('click', () => {
-      nameInput.value = nameValue.textContent.trim();
-      nameModal.classList.add('show');
-      setTimeout(() => nameInput.focus(), 200);
-    });
-    document.getElementById('nameCancel').addEventListener('click', () => nameModal.classList.remove('show'));
-    function saveName() {
-      const v = nameInput.value.trim();
-      if (!v) { nameInput.focus(); return; }
-      nameValue.textContent = v;          // 配置页同步
-      if (agentTitle) agentTitle.textContent = v;   // 对话页标题同步
-      nameModal.classList.remove('show');
-    }
-    document.getElementById('nameOk').addEventListener('click', saveName);
-    nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveName(); });
-    nameModal.addEventListener('click', (e) => { if (e.target === nameModal) nameModal.classList.remove('show'); });
-
-    // ---------- 声音风格 / 对话风格：底部选项面板单选 ----------
-    const optMask = document.getElementById('optSheetMask');
-    const optSheet = document.getElementById('optSheet');
-    const optTitle = document.getElementById('optSheetTitle');
-    const optList = document.getElementById('optSheetList');
-
-    function openOptSheet(title, options, currentText, targetSpan) {
-      optTitle.textContent = title;
-      optList.innerHTML = '';
-      options.forEach(opt => {
-        const item = document.createElement('div');
-        item.className = 'opt-item' + (opt.label === currentText ? ' selected' : '');
-        item.innerHTML = `
-          <span class="opt-label">${opt.label}</span>
-          ${opt.sub ? `<span class="opt-sub">${opt.sub}</span>` : ''}
-          <svg class="opt-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
-        item.addEventListener('click', () => {
-          targetSpan.textContent = opt.label;
-          closeOptSheet();
-        });
-        optList.appendChild(item);
-      });
-      optMask.classList.add('open');
-      optSheet.classList.add('open');
-    }
-    function closeOptSheet() {
-      optMask.classList.remove('open');
-      optSheet.classList.remove('open');
-    }
-    optMask.addEventListener('click', closeOptSheet);
-
-    const voiceValue = document.getElementById('voiceValue');
-    document.getElementById('rowVoice').addEventListener('click', () => {
-      openOptSheet('声音风格', [
-        { label: '温柔', sub: '轻柔耐心' },
-        { label: '活泼', sub: '元气满满' },
-        { label: '沉稳', sub: '低沉可靠' },
-        { label: '童声', sub: '稚气可爱' },
-      ], voiceValue.textContent.trim(), voiceValue);
-    });
-
-    const chatStyleValue = document.getElementById('chatStyleValue');
-    document.getElementById('rowChatStyle').addEventListener('click', () => {
-      openOptSheet('对话风格', [
-        { label: '简洁', sub: '只说重点' },
-        { label: '友好', sub: '亲切自然' },
-        { label: '详尽', sub: '解释充分' },
-      ], chatStyleValue.textContent.trim(), chatStyleValue);
     });
   })();
 
@@ -9239,20 +9344,17 @@
    * ============================================================ */
   (function PerformModule() {
     // -------------------- 内存数据 --------------------
-    // 用户作品：synced 表示是否已同步到真机
+    // 用户作品：syncState = synced(已同步) | syncing(准备中,自动下发) | waiting(等待机器人上线)
     let works = [
-      { id: 'w1', name: '动作模仿-20:19:29', duration: '0:06', date: '2026-06-03', synced: false },
-      { id: 'w2', name: 'test1',             duration: '0:02', date: '2026-05-22', synced: true  },
-      { id: 'w3', name: '裁判恰恰',           duration: '0:19', date: '2026-05-22', synced: false },
-      { id: 'w4', name: '动作模仿-11:13:51', duration: '0:08', date: '2026-05-20', synced: true  },
+      { id: 'w1', name: '动作模仿-20:19:29', duration: '0:06', date: '2026-06-03', syncState: 'waiting' },
+      { id: 'w2', name: 'test1',             duration: '0:02', date: '2026-05-22', syncState: 'synced'  },
+      { id: 'w3', name: '裁判恰恰',           duration: '0:19', date: '2026-05-22', syncState: 'synced' },
+      { id: 'w4', name: '动作模仿-11:13:51', duration: '0:08', date: '2026-05-20', syncState: 'synced' },
     ];
-    // 学习任务：status = learning | pending | failed
+    // 学习任务：status = learning | failed（方案A：学习完成自动进作品，无“待保存”）
     let tasks = [
       { id: 't1', name: 'jj',               time: '刚刚',      status: 'learning', progress: 12 },
-      { id: 't2', name: '123',              time: '今日 19:28', status: 'pending',  progress: 100 },
       { id: 't3', name: '动作模仿-20:45:33', time: '昨日 20:45', status: 'failed',   progress: 0 },
-      { id: 't4', name: '动作模仿-20:12:09', time: '昨日 20:12', status: 'pending',  progress: 100 },
-      { id: 't5', name: '动作模仿-20:09:11', time: '昨日 20:09', status: 'pending',  progress: 100 },
     ];
     let seq = 100; // 自增 id
     const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -9278,6 +9380,9 @@
     const syncIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>';
     const playIconSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 
+    // 作品状态标签文案
+    const SYNC_LABEL = { synced: '已准备好', syncing: '准备中…', waiting: '等待机器人上线' };
+
     // ==================== 渲染：用户作品 ====================
     function renderWorks() {
       userWorksCount.textContent = works.length;
@@ -9286,19 +9391,19 @@
           <div class="work-thumb">${thumbSVG}</div>
           <div class="work-info">
             <div class="work-name">${esc(w.name)}</div>
-            <div class="work-tag ${w.synced ? 'synced' : ''}">${w.synced ? '已同步' : '未同步'}</div>
+            <div class="work-tag ${w.syncState === 'synced' ? 'synced' : w.syncState === 'waiting' ? 'waiting' : ''}">${SYNC_LABEL[w.syncState]}</div>
             <div class="work-meta">
               <span>视频时长 ${w.duration}</span>
               <span>${w.date}</span>
             </div>
           </div>
-          ${w.synced
-            ? `<button class="work-action-btn execute" data-action="execute">${playIconSVG}执行</button>`
-            : `<button class="work-action-btn sync" data-action="sync">${syncIconSVG}同步</button>`}
+          ${w.syncState === 'syncing'
+            ? `<button class="work-action-btn syncing" data-action="execute" disabled>${syncIconSVG}准备中</button>`
+            : `<button class="work-action-btn execute" data-action="execute">${playIconSVG}执行</button>`}
         </div>`).join('');
     }
 
-    // 作品卡：点击卡片进播放页；点同步/执行按钮各自处理
+    // 作品卡：点击卡片进播放页；点执行按钮按状态处理（方案A：同步已自动，执行时只判断状态）
     worksListAll.addEventListener('click', (e) => {
       const card = e.target.closest('.work-card');
       if (!card) return;
@@ -9308,18 +9413,11 @@
       const actionBtn = e.target.closest('.work-action-btn');
       if (actionBtn) {
         e.stopPropagation();
-        if (actionBtn.dataset.action === 'sync') {
-          // 同步：loading → 标记已同步 → 重渲染（按钮变“执行”）
-          actionBtn.classList.remove('sync');
-          actionBtn.classList.add('syncing');
-          actionBtn.textContent = '同步中...';
-          setTimeout(() => {
-            work.synced = true;
-            renderWorks();
-            UI.toast('已同步到机器人', { variant: 'perform', duration: 1500 });
-          }, 1200);
+        if (work.syncState === 'syncing') {
+          UI.toast('正在准备，请稍候…', { variant: 'perform', duration: 1500 });
+        } else if (work.syncState === 'waiting') {
+          UI.toast('请先唤醒 / 开机机器人', { variant: 'perform', duration: 1800 });
         } else {
-          // 执行：下发播放指令
           UI.toast('已下发执行指令', { variant: 'perform', duration: 1500 });
         }
         return;
@@ -9329,17 +9427,15 @@
     });
 
     // ==================== 渲染：我的任务 ====================
-    const STATUS_LABEL = { learning: '· 学习中', pending: '· 待保存', failed: '· 失败' };
-    const saveIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>';
+    const STATUS_LABEL = { learning: '· 学习中', failed: '· 失败' };
     const delIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6 M14 11v6"/></svg>';
 
     function renderTasks() {
       taskBadge.textContent = tasks.length;
       taskListEl.innerHTML = tasks.map(t => {
-        // 操作按钮：仅“待保存”有保存按钮；所有任务都有删除按钮
+        // 操作按钮：所有任务都有删除按钮（方案A：无手动保存）
         const actions = `
           <div class="mocap-task-card-actions">
-            ${t.status === 'pending' ? `<button class="mocap-task-action-btn save" data-task-act="save">${saveIconSVG}</button>` : ''}
             <button class="mocap-task-action-btn delete" data-task-act="delete">${delIconSVG}</button>
           </div>`;
         // 进度条：失败态不显示
@@ -9378,35 +9474,14 @@
       const actBtn = e.target.closest('[data-task-act]');
       if (actBtn) {
         e.stopPropagation();
-        if (actBtn.dataset.taskAct === 'save') {
-          // 保存：待保存任务 → 移出任务列表，作为新作品加入「用户作品」（未同步）
-          const idx = tasks.findIndex(t => t.id === task.id);
-          if (idx > -1) tasks.splice(idx, 1);
-          works.unshift({
-            id: 'w' + (++seq), name: task.name,
-            duration: task.duration || '0:05',
-            date: new Date().toISOString().slice(0, 10),
-            synced: false,
-          });
-          renderTasks();
-          renderWorks();
-          UI.toast('已保存到用户作品', { variant: 'perform', duration: 1500 });
-        } else {
-          // 删除：二次确认
-          pendingDeleteTaskId = task.id;
-          document.getElementById('taskDeleteModal').classList.add('show');
-        }
+        // 仅删除（方案A：无手动保存）
+        pendingDeleteTaskId = task.id;
+        document.getElementById('taskDeleteModal').classList.add('show');
         return;
       }
 
-      // 点卡片其他区域 → 看详情
-      if (task.status === 'pending') {
-        // 待保存：可看与作品相同的播放预览页
-        openPlayer(task.name);
-      } else {
-        // 学习中 / 失败：只能看原视频
-        openOriginal(task);
-      }
+      // 点卡片其他区域 → 学习中 / 失败都只能看原视频
+      openOriginal(task);
     });
 
     // 删除确认弹窗
@@ -9519,12 +9594,42 @@
       const name = document.getElementById('previewNameInput').value.trim();
       if (!name) { UI.toast('请输入名称', { variant: 'perform', duration: 1500 }); return; }
       // 新增学习中任务
-      tasks.unshift({ id: 't' + (++seq), name, time: '刚刚', status: 'learning', progress: 5, duration: '0:05' });
+      const taskId = 't' + (++seq);
+      tasks.unshift({ id: taskId, name, time: '刚刚', status: 'learning', progress: 5, duration: '0:05' });
       renderTasks();
       UI.closePage('subpagePreview');
       setTimeout(() => UI.openPage('subpageUploadSuccess'), 350);
       pendingSource = null;
+      // 方案A：学习完成 → 自动进作品(准备中) → 自动下发同步成功
+      autoAdvance(taskId, name);
     });
+
+    // 方案A 自动流转：学习中 → (完成) 自动进作品 syncing → (下发) 自动 synced
+    function autoAdvance(taskId, name) {
+      // 1) 学习完成：移出任务列表，作为新作品进入「用户作品」，状态 准备中
+      setTimeout(() => {
+        const idx = tasks.findIndex(t => t.id === taskId);
+        if (idx === -1) return;            // 任务可能已被用户删除
+        tasks.splice(idx, 1);
+        const workId = 'w' + (++seq);
+        works.unshift({
+          id: workId, name,
+          duration: '0:05',
+          date: new Date().toISOString().slice(0, 10),
+          syncState: 'syncing',            // 自动下发中
+        });
+        renderTasks();
+        renderWorks();
+        // 2) 自动下发完成 → 已准备好（演示默认机器人在线）
+        setTimeout(() => {
+          const w = works.find(x => x.id === workId);
+          if (!w) return;
+          w.syncState = 'synced';
+          renderWorks();
+          UI.toast('「' + name + '」已准备好，可随时启动', { variant: 'perform', duration: 2000 });
+        }, 2500);
+      }, 4000);
+    }
 
     // 上传成功页出口
     document.getElementById('goTaskListBtn').addEventListener('click', () => {
